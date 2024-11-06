@@ -36,7 +36,7 @@ public class ProductUnitTest {
 
 
     @Test(dataProvider = "loginCreds")
-    public void addProductToCart(String username, String password,String prodName)
+    public void addProductToCart(String username, String password, String[] details)
     {
         driver.get(SITE_URL);
         
@@ -44,25 +44,45 @@ public class ProductUnitTest {
 
         Assert.assertTrue(loginPage.isLoginSuccessfull());
 
-        itemsPage.goToProductPage(prodName);
+        itemsPage.goToProductPage(details[0]);
         itemPage.addToCart();
 
         Assert.assertTrue(itemPage.isIteamAddedToCart());
 
         dashBoard.logOutAction();
         Assert.assertTrue(dashBoard.isLogOutSuccess());
-
-
     }
 
+    @Test(dataProvider = "loginCreds")
+    public void addProductsToCart(String username, String password, String[] details)
+    {
+        driver.get(SITE_URL);
+        
+        loginPage.loginTask(username, password);
+
+        Assert.assertTrue(loginPage.isLoginSuccessfull());
+
+        for(String item : details)
+        {
+            itemsPage.goToProductPage(item);
+            itemPage.addToCart();
+            Assert.assertTrue(itemPage.isIteamAddedToCart());
+            itemPage.allItemsPage();
+        }
+
+        dashBoard.logOutAction();
+        Assert.assertTrue(dashBoard.isLogOutSuccess());
+    }
 
     @DataProvider(name="loginCreds")
     public Object[][] loginCreds()
     {
 
 
-        return new Object[][] {{"standard_user","secret_sauce","Sauce Labs Bolt T-Shirt"},
-                            {"problem_user","secret_sauce","Sauce Labs Bolt T-Shirt"}};
+        return new Object[][] {{"standard_user","secret_sauce","Sauce Labs Bolt T-Shirt","Sauce Labs Backpack",
+                                "Sauce Labs Fleece Jacket"},
+                            {"problem_user","secret_sauce","Sauce Labs Bolt T-Shirt","Sauce Labs Backpack",
+                                "Sauce Labs Fleece Jacket"}};
 
         
 
