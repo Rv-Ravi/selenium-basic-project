@@ -1,9 +1,13 @@
 package com.learning.selenium.Pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProductPage {
     
@@ -16,7 +20,7 @@ public class ProductPage {
     @FindBy(id = "back-to-products")
     WebElement backToProds;
 
-    @FindBy(xpath = "//div[class = 'inventory_details_price']")
+    @FindBy(xpath = "//div[@class = 'inventory_details_price']")
     WebElement itemPrice;
 
 
@@ -26,9 +30,10 @@ public class ProductPage {
         PageFactory.initElements(driver, this);
     }
 
-    public String getItemPrice()
+    public float getItemPrice()
     {
-        return itemPrice.getText();
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
+        return Float.parseFloat(wait.until(ExpectedConditions.visibilityOf(itemPrice)).getText().substring(1));
     }
 
     public void addToCart()
