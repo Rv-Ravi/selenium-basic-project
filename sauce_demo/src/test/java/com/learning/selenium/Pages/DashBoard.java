@@ -52,6 +52,11 @@ public class DashBoard {
         
     }
 
+    public void goToCart()
+    {
+        cartButton.click();
+    }
+
     public boolean isLogOutSuccess()
     {
         return driver.getCurrentUrl().equals("https://www.saucedemo.com/");
