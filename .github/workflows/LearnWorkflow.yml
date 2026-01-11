@@ -74,7 +74,7 @@ jobs:
       - name: Read the downloaded file
         run: |
             cat sample.txt | grep -i "test"
-            echo ${{ matrix.level }} ${{ jobs.build.outputs.output1 }}
+            echo ${{ matrix.level }} ${{ needs.build.outputs.output1 }}
   MultipleJobMatrix:
     name: Multiple jobs with Matrix
     
