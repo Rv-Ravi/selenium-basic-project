@@ -59,7 +59,7 @@ jobs:
         level: ["hello"]
         include:
           - os: ubuntu-20.04
-          - level: "Hello all"
+            level: "Hello all"
     runs-on: ${{ matrix.os }}
 
     steps:
