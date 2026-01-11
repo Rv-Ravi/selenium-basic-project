@@ -1,0 +1,39 @@
+# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+
+name: Maven Package
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+    inputs:
+      build-parameters:
+        description: Build parameters of Maven
+        default: -B test --file pom.xml
+        type: string
+        required: false
+
+jobs:
+  build:
+    name: Build-Maven
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - name: Installing Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Build code using Maven command
+        run: |
+            cd sauce_demo
+            mvn ${{ inputs.build-parameters }}
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: download-file
+          path: target/surefire-reports/index.html
