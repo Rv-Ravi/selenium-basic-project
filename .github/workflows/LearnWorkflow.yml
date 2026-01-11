@@ -19,6 +19,9 @@ jobs:
     name: Build-Maven
     runs-on: ubuntu-latest
 
+    env:
+      buildParam: ${{ github.event_name == 'workflow_dispatch' && inputs.build-parameters || '-B test --file pom.xml' }}
+
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
@@ -31,7 +34,7 @@ jobs:
       - name: Build code using Maven command
         run: |
             cd sauce_demo
-            mvn ${{ inputs.build-parameters }}
+            mvn ${{ env.buildParam }}
       - name: upload artifact
         uses: actions/upload-artifact@v6
         with:
