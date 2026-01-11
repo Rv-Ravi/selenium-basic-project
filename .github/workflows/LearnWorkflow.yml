@@ -50,17 +50,7 @@ jobs:
     name: Get Sample file
     # this job needs to be completed within 1 min and throw an error if it takes more than 1 min
     timeout-minutes: 1 
-    needs: ["build"]
-    strategy:
-      fail-fast: false
-      #max-parallel: 3
-      matrix:
-        os: [ubuntu-latest, ubuntu-20.04]
-        level: ["hello"]
-        include:
-          - os: ubuntu-20.04
-            level: "Hello all"
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
       - name: Download the artifact
@@ -71,3 +61,19 @@ jobs:
         run: |
             cat sample.txt | grep -i "test"
             echo ${{ matrix.level }}
+  MultipleJobMatrix:
+    name: Multiple jobs with Matrix
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        os: [ubuntu-latest, ubuntu-20.04]
+        level: ["hello"]
+        include:
+          - os: ubuntu-20.04
+            level: "Hello all"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Read the level and display
+        run: |
+          echo "The level is ${{ matrix.level }}"
