@@ -51,7 +51,16 @@ jobs:
     # this job needs to be completed within 1 min and throw an error if it takes more than 1 min
     timeout-minutes: 1 
     needs: ["build"]
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        os: [ubuntu-latest, ubuntu-20.04]
+        level: ["hello"]
+        include:
+          - os: ubuntu-20.04
+          - level: "Hello all"
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Download the artifact
@@ -61,3 +70,4 @@ jobs:
       - name: Read the downloaded file
         run: |
             cat sample.txt | grep -i "test"
+            echo ${{ matrix.level }}
