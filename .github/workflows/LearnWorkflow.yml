@@ -87,7 +87,7 @@ jobs:
         include:
           - os: ubuntu-22.04
             level: "Hello all"
-    if: ${{ github.ref == 'refs/heads/main' && runner.os == '' }}
+    if: ${{ github.ref == 'refs/heads/main' && runner.os == 'Linux' }}
     runs-on: ${{ matrix.os }}
     steps:
       - name: Read the level and display
