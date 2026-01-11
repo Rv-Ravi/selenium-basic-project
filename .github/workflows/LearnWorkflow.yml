@@ -34,9 +34,10 @@ jobs:
       - name: Build code using Maven command
         run: |
             cd sauce_demo
-            mvn ${{ env.buildParam }}
+            cd -
+            mkdir -p simpleDir/name && echo "Sample" >> sample.txt
       - name: upload artifact
         uses: actions/upload-artifact@v6
         with:
           name: download-file
-          path: target/surefire-reports/index.html
+          path: simpleDir/name/sample.txt
