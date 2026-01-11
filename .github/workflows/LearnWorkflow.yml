@@ -12,7 +12,7 @@ on:
         required: false
   #scheduling the cron job for every 2 mins
   schedule:
-    - cron: "*/2 * * * *"
+    - cron: "*/10 * * * *"
 
 concurrency: 
 # concurrency if the same workflow runs at the same time within a group, if cancel in progress is true 
