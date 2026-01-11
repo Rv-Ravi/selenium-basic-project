@@ -33,11 +33,10 @@ jobs:
           cache: 'maven'
       - name: Build code using Maven command
         run: |
-            cd sauce_demo
-            cd -
-            mkdir -p simpleDir/name && echo "Sample" >> sample.txt
+            echo "Sample ${{ env.buildParam }}" >> sample.txt
+            cat sample.txt && pwd
       - name: upload artifact
         uses: actions/upload-artifact@v6
         with:
           name: download-file
-          path: simpleDir/name/sample.txt
+          path: sample.txt
