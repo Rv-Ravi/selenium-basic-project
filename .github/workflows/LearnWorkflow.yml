@@ -41,6 +41,7 @@ jobs:
           path: sample.txt
   getSampleFile:
     name: Get Sample file
+    needs: ["build"]
     runs-on: ubuntu-latest
 
     steps:
