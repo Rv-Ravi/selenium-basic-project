@@ -53,7 +53,7 @@ jobs:
     needs: ["build"]
     strategy:
       fail-fast: false
-      max-parallel: 3
+      #max-parallel: 3
       matrix:
         os: [ubuntu-latest, ubuntu-20.04]
         level: ["hello"]
