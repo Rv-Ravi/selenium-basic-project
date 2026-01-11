@@ -34,9 +34,20 @@ jobs:
       - name: Build code using Maven command
         run: |
             echo "Sample ${{ env.buildParam }}" >> sample.txt
-            cat sample.txt && pwd
       - name: upload artifact
         uses: actions/upload-artifact@v6
         with:
           name: download-file
           path: sample.txt
+  getSampleFile:
+    name: Get Sample file
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download the artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: download-file
+      - name: Read the downloaded file
+        run: |
+            cat sample.txt | grep -i "test"
