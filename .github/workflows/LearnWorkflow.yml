@@ -25,6 +25,8 @@ jobs:
   build:
     name: Build-Maven
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.buildName.outputs.result }}
 
     env:
       buildParam: ${{ github.event_name == 'workflow_dispatch' && inputs.build-parameters || '-B test --file pom.xml' }}
@@ -39,8 +41,10 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       - name: Build code using Maven command
+        id: buildName
         run: |
             echo "Sample ${{ env.buildParam }}" >> sample.txt
+            echo "result=success" >> $GITHUB_OUTPUT
       - name: upload artifact
         uses: actions/upload-artifact@v6
         with:
@@ -70,10 +74,10 @@ jobs:
       - name: Read the downloaded file
         run: |
             cat sample.txt | grep -i "test"
-            echo ${{ matrix.level }}
+            echo ${{ matrix.level }} ${{ jobs.build.outputs.output1 }}
   MultipleJobMatrix:
     name: Multiple jobs with Matrix
-    if: ${{ githib.ref == 'refs/heads/main' }}
+    
     strategy:
       fail-fast: false
       #max-parallel: 3
@@ -83,6 +87,7 @@ jobs:
         include:
           - os: ubuntu-22.04
             level: "Hello all"
+    if: ${{ github.ref == 'refs/heads/main' && runner.os == '' }}
     runs-on: ${{ matrix.os }}
     steps:
       - name: Read the level and display
