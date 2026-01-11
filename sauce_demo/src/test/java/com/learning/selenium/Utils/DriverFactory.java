@@ -22,7 +22,7 @@ public class DriverFactory {
     public static WebDriver driverSetUp(Browsers browser,boolean headless)
     {
         WebDriver driver = null;
-        
+        headless = true;
 
         switch (browser) {
             case CHROME:
