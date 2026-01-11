@@ -33,7 +33,7 @@ jobs:
             cd sauce_demo
             mvn ${{ inputs.build-parameters }}
       - name: upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: download-file
           path: target/surefire-reports/index.html
