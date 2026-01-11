@@ -49,8 +49,17 @@ jobs:
   getSampleFile:
     name: Get Sample file
     # this job needs to be completed within 1 min and throw an error if it takes more than 1 min
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        os: [ubuntu-latest, ubuntu-22.04]
+        level: ["hello"]
+        include:
+          - os: ubuntu-20.04
+            level: "Hello all"
     timeout-minutes: 1 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     needs: ["build"]
 
     steps:
@@ -69,10 +78,10 @@ jobs:
       #max-parallel: 3
       matrix:
         os: [ubuntu-latest, ubuntu-22.04]
-        level: ["hello","hello-all"]
-        #include:
-        #  - os: ubuntu-20.04
-        #    level: "Hello all"
+        level: ["hello"]
+        include:
+          - os: ubuntu-20.04
+            level: "Hello all"
     runs-on: ${{ matrix.os }}
     steps:
       - name: Read the level and display
