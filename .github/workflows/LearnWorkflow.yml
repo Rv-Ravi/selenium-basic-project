@@ -69,10 +69,10 @@ jobs:
       #max-parallel: 3
       matrix:
         os: [ubuntu-latest, ubuntu-20.04]
-        level: ["hello"]
-        include:
-          - os: ubuntu-20.04
-            level: "Hello all"
+        level: ["hello","hello-all"]
+        #include:
+        #  - os: ubuntu-20.04
+        #    level: "Hello all"
     runs-on: ${{ matrix.os }}
     steps:
       - name: Read the level and display
